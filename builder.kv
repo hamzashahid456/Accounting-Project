@@ -1,0 +1,384 @@
+ScreenManager:
+    LoginScreen:
+        name: 'login'
+    MenuScreen:
+        name: 'main_pg'
+    ShowData:
+        id: 's_d'
+        name: 's_d'
+    ChartAccounts:
+        name: 'c_a'
+    GeneralJournal:
+        name: 'g_j'
+    EnterData:
+        name: 'e_d'
+    NewAccount:
+        name: 'n_a'
+    LoadReport:
+        name: 'l_r'
+    IncomeStatement:
+        name: 'i_s'
+
+<LoginScreen>
+    MDCard:
+        size_hint: None, None
+        size : 320, 400
+
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 15
+        padding : 20
+        spacing : 30
+        orientation : 'vertical'
+        MDLabel:
+            text : 'LOGIN'
+            font_style: 'Button'
+            font_size: 45
+            halign: 'center'
+            height : self.texture_size[1]
+        MDTextFieldRound:
+            hint_text : 'username'
+            icon_right : 'account'
+            size_hint_x : None
+            width : 220
+            font_size : 20
+            pos_hint : {"center_x": .5}
+            color_active : [1,1,1,1]
+            helper_text : 'Required'
+            helper_text_mode : 'on_error'
+            required : True
+            on_text_validate: pas.focus = True
+
+        MDTextFieldRound:
+            id : pas
+            hint_text : "password"
+            icon_right : "eye-off"
+            size_hint_x : None
+            width : 220
+            font_size : 20
+            pos_hint : {"center_x": .5}
+            color_active : [1,1,1,1]
+            password : True
+            helper_text : 'Required'
+            helper_text_mode : 'on_error'
+            required : True
+        MDRoundFlatButton:
+            text : 'Login'
+            pos_hint : {"center_x": .5}
+            font_size : 20
+            on_press:
+                root.manager.current = 'main_pg'
+                root.manager.transition.direction = 'left'
+        Widget:
+            size_hint_y : None
+            height : 30
+
+
+
+<MenuScreen>
+    MDFillRoundFlatButton:
+        text: 'Charts of Accounts'
+        pos_hint: {'center_x': 0.25, 'center_y': 0.6}
+        font_style: 'H6'
+        size_hint: 0.4, 0.1
+        on_press:
+            root.manager.current = 'c_a'
+            root.manager.transition.direction = 'left'
+    MDFillRoundFlatButton:
+        text: 'General Journal'
+        pos_hint: {'center_x': 0.75, 'center_y': 0.6}
+        font_style: 'H6'
+        size_hint: 0.4, 0.1
+        on_press:
+            root.manager.current = 'g_j'
+            root.manager.transition.direction = 'left'
+    MDFillRoundFlatButton:
+        text: 'Income Statement'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+        font_style: 'H6'
+        size_hint: 0.4, 0.1
+        on_press:
+            root.manager.current = 'i_s'
+            root.manager.transition.direction = 'left'
+    MDNavigationLayout:
+        ScreenManager:
+            Screen:
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: 'Accounts Manager'
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state('toggle')]]
+                        right_action_items: [['magnify', lambda x: app.open_side_menu()], ['cog', lambda x: app.open_side_menu()]]
+                        elevation: 10
+                    Widget:
+        MDNavigationDrawer:
+            id: nav_drawer
+            BoxLayout:
+                orientation: 'vertical'
+                ScrollView:
+                    MDList:
+                        OneLineIconListItem:
+                            text: 'Dash Board'
+                        OneLineIconListItem:
+                            text: 'Banking'
+                        OneLineIconListItem:
+                            text: 'Sales'
+                        OneLineIconListItem:
+                            text: 'Expenses'
+                        OneLineIconListItem:
+                            text: 'Report'
+                        OneLineIconListItem:
+                            text: 'Taxes'
+                        OneLineIconListItem:
+                            text: 'My Account'
+
+<ChartAccounts>
+    FloatLayout:
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.958}
+            title: 'Charts Of Accounts'
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.046}
+
+        MDFillRoundFlatButton:
+            text: 'New Account'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            font_style: 'H6'
+            size_hint: 0.4, 0.1
+            on_press:
+                root.manager.current = 'n_a'
+                root.manager.transition.direction = 'left'
+        MDFillRoundFlatButton:
+            text: 'Load Report'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            font_style: 'H6'
+            size_hint: 0.4, 0.1
+            on_press:
+                root.manager.current = 'l_r'
+                root.manager.transition.direction = 'left'
+        MDFloatingActionButton:
+            icon: 'arrow-left'
+            pos_hint: {'center_x': 0.05, 'center_y': 0.846}
+            user_font_size: '30sp'
+            on_press:
+                root.manager.current = 'main_pg'
+                root.manager.transition.direction = 'right'
+
+
+<NewAccount>
+    FloatLayout:
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.958}
+            title: 'Make Account'
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.046}
+        MDTextField:
+            id: a_ti
+            hint_text: "Enter Account title"
+            mode: "rectangle"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.82}
+            size_hint: (0.5, 0.08)
+            write_tab: False
+            on_text_validate: e_ty.focus = True
+            helper_text : 'Required'
+            helper_text_mode : 'on_error'
+            required : True
+        MDTextField:
+            id: e_ty
+            hint_text: "Enter Account type"
+            mode: "rectangle"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.74}
+            size_hint: (0.5, 0.08)
+            write_tab: False
+            on_text_validate: e_d.focus = True
+            helper_text : 'Required'
+            helper_text_mode : 'on_error'
+            required : True
+        MDTextField:
+            id: e_d
+            hint_text: "Enter Description"
+            mode: "rectangle"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.47}
+            size_hint: (0.5, 0.45)
+        MDFloatingActionButton:
+            icon: 'plus'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.16}
+            user_font_size: '30sp'
+            on_press:
+                root.make_acc()
+        MDFloatingActionButton:
+            icon: 'arrow-left'
+            pos_hint: {'center_x': 0.05, 'center_y': 0.846}
+            user_font_size: '30sp'
+            on_press:
+                root.manager.current = 'c_a'
+                root.manager.transition.direction = 'right'
+
+<LoadReport>
+    on_enter:
+        root.load_report()
+
+    FloatLayout:
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.958}
+            title: 'Accounts Report'
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.046}
+
+        MDFloatingActionButton:
+            icon: 'arrow-left'
+            pos_hint: {'center_x': 0.05, 'center_y': 0.846}
+            user_font_size: '30sp'
+            on_press:
+                root.manager.current = 'c_a'
+                root.manager.transition.direction = 'right'
+
+
+<GeneralJournal>
+    FloatLayout:
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.958}
+            title: 'General Journal'
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.046}
+        MDFillRoundFlatButton:
+            text: 'Enter Data'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            font_style: 'H6'
+            size_hint: 0.4, 0.1
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'e_d'
+        MDFillRoundFlatButton:
+            text: 'Show Data'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            font_style: 'H6'
+            size_hint: 0.4, 0.1
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.current = 's_d'
+        MDFloatingActionButton:
+            icon: 'arrow-left'
+            pos_hint: {'center_x': 0.05, 'center_y': 0.846}
+            user_font_size: '30sp'
+            on_press:
+                root.manager.current = 'main_pg'
+                root.manager.transition.direction = 'right'
+
+
+<ShowData>
+    on_enter:
+        root.show_data()
+    FloatLayout:
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.958}
+            title: 'Accounts Data'
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.046}
+
+        MDFloatingActionButton:
+            icon: 'arrow-left'
+            pos_hint: {'center_x': 0.05, 'center_y': 0.846}
+            user_font_size: '30sp'
+            on_press:
+                root.manager.current = 'g_j'
+                root.manager.transition.direction = 'right'
+
+
+<EnterData>
+    FloatLayout:
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.958}
+            title: 'Enter Data'
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.046}
+        MDTextField:
+            id : date
+            hint_text : "Date"
+            mode : "rectangle"
+            pos_hint: {'center_x': 0.4, 'center_y': 0.82}
+            size_hint: (0.3, 0.08)
+            disabled : True
+            required : True
+        MDRaisedButton:
+            text: "Select Date"
+            pos_hint: {'center_x': 0.65, 'center_y': 0.815}
+            size_hint: (0.15, 0.066)
+            on_release:
+                root.show_date_picker()
+        MDTextField:
+            id: acc_name
+            hint_text: "Enter Account"
+            mode: "rectangle"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.74}
+            size_hint: (0.5, 0.08)
+            write_tab: False
+            on_text_validate: acc_label.focus = True
+            helper_text : 'Required'
+            helper_text_mode : 'on_error'
+            required : True
+        MDTextField:
+            id: acc_label
+            hint_text: "Debit/Credit"
+            mode: "rectangle"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.66}
+            size_hint: (0.5, 0.08)
+            write_tab: False
+            on_text_validate: amount.focus = True
+            helper_text : 'Required'
+            helper_text_mode : 'on_error'
+            required : True
+        MDTextField:
+            id: amount
+            hint_text: "Enter Amount"
+            mode: "rectangle"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.58}
+            size_hint: (0.5, 0.08)
+            write_tab: False
+            on_text_validate: memo.focus = True
+            input_filter: 'float'
+            helper_text : 'Required'
+            helper_text_mode : 'on_error'
+            required : True
+        MDTextField:
+            id: memo
+            hint_text: "Enter Memo"
+            mode: "rectangle"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.42}
+            size_hint: (0.5, 0.24)
+
+        MDFloatingActionButton:
+            icon: 'plus'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.16}
+            user_font_size: '30sp'
+            on_press:
+                root.on_enter()
+                root.enter_data()
+
+
+        MDFloatingActionButton:
+            icon: 'arrow-left'
+            pos_hint: {'center_x': 0.05, 'center_y': 0.846}
+            user_font_size: '30sp'
+            on_press:
+                root.manager.current = 'g_j'
+                root.manager.transition.direction = 'right'
+
+
+<IncomeStatement>
+    on_enter:
+        root.show_statement()
+
+    FloatLayout:
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.958}
+            title: 'Income Statement'
+        MDToolbar:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.046}
+
+        MDFloatingActionButton:
+            icon: 'arrow-left'
+            pos_hint: {'center_x': 0.05, 'center_y': 0.846}
+            user_font_size: '30sp'
+            on_press:
+                root.manager.current = 'main_pg'
+                root.manager.transition.direction = 'right'
